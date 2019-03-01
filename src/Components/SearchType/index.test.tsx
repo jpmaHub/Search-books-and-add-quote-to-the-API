@@ -1,25 +1,11 @@
-import { mount, ReactWrapper } from 'enzyme';
-import SearchType from '.';
+import { shallow } from 'enzyme';
+import SearchType from ".";
 import React from 'react';
 
-class SearchTypeComponent {
-  private wrapper: ReactWrapper;
-
-  constructor() {
-    this.wrapper = mount(
-      <SearchType type={"Author"} />
-    );
-  }
-
-  public expectTextInsideElementToEqual(expected: string, findBy: string) {
-    expect(this.wrapper.find(`[data-test="${findBy}"]`).text()).toEqual(expected);
-  }
-}
-
 describe('Type', () => {
-  const component = new SearchTypeComponent();
+  const wrapper = shallow(<SearchType type={"Author"} />);
 
   it('renders the author type', () => {
-    component.expectTextInsideElementToEqual("Author", "appType");
+    expect(wrapper.find(`[data-test="appType"]`).text()).toEqual("Author");
   });
 })

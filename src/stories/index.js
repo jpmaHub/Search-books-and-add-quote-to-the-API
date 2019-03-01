@@ -1,19 +1,37 @@
 import React from 'react';
-
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
+import Header from '../Components/Header';
+import AddBook from '../Components/AddBook';
 
-import { Button, Welcome } from '@storybook/react/demo';
+storiesOf('List most searched title', module)
+.add('with header',() => (<Header type= "Title" />))
+.add('with AddBook',() => (<AddBook type= "Title" listSearchedBooks={true}
+ bookType = {[
+  <div>book1</div>,
+  <div>book2</div>,
+  <div>book3</div>]}
+ />
+));
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+storiesOf('List most searched Author', module)
+.add('with header',() => (<Header type= "Author" />))
+.add('with AddBook',() => (<AddBook type= "Author" listSearchedBooks={true} 
+bookType = {[
+  <div>author1</div>,
+  <div>author2</div>,
+  <div>author3</div>]}
+ />));
 
-storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => (
-    <Button onClick={action('clicked')}>
-      <span role="img" aria-label="so cool">
-        😀 😎 👍 💯
-      </span>
-    </Button>
-  ));
+ storiesOf('Search by Title', module)
+.add('with header',() => (<Header type= "Title" />))
+.add('with AddBook',() => (<AddBook type= "Title" listSearchedBooks={false}/>));
+
+storiesOf('Search by Author', module)
+.add('with header',() => (<Header type= "Author" />))
+.add('with AddBook',() => (<AddBook type= "Author" />));
+
+storiesOf('By Default', module)
+.add('with header',() => (<Header/>))
+.add('with AddBook',() => (<AddBook/>));
+
+

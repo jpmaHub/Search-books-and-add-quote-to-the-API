@@ -4,7 +4,7 @@ import SearchType from '../SearchType';
 import Welcome from '../Welcome';
 
 interface IProps {
-  type: string;
+  type?: string | undefined;
 }
 
 export default class Header extends Component<IProps> {
@@ -17,12 +17,7 @@ export default class Header extends Component<IProps> {
     );
   }
 
-  private message(type: string) {
-    if (type == undefined) {
-      return "Title";
-    }
-    else {
-      return this.props.type;
-    }
+  private message(type: string | undefined) {
+    return (type == undefined ? "Title" : this.props.type);
   }
 }
