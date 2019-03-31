@@ -1,12 +1,14 @@
 import { shallow } from 'enzyme';
 import ViewBook from ".";
 import React from 'react';
+import faker from "faker";
+import { generateMockSearchBooks } from '../../TestUtilities';
 
 describe('View Book', () => {
-  const wrapper = shallow(<ViewBook children={<div>Book1</div>} />);
+  const booksData = generateMockSearchBooks(faker.random.number(10));
+  const wrapper = shallow( <ViewBook booksData={booksData}/> );
 
-  it('renders a book', () => {
-    expect(wrapper.find('div')).toBeTruthy();
-    expect(wrapper.find(`[data-test="viewBook"]`).text()).toEqual("Book1");
+  it('renders book list table', () => {
+    expect(wrapper.find({ "data-test": "table-wrapper-test" }).props().dataSource).toEqual(booksData);
   });
 })

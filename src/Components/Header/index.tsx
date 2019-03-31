@@ -12,7 +12,7 @@ export default class Header extends Component<IProps> {
     return (
       <header className={styles.appHeader}>
         <Welcome />
-        <SearchType type={this.message(this.props.type)} />
+        <SearchType type={''} />
       </header>
     );
   }

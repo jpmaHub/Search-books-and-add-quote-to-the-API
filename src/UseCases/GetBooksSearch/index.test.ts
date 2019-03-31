@@ -1,8 +1,7 @@
 import BooksSearchApiGateway from "../../Gateways/BooksTitleApiGateway";
-import GetSearchBooks from ".";
+import GetSearchBooks, { IBookListItem } from ".";
 import faker from "faker";
 import { generateMockSearchBooks } from "../../TestUtilities";
-import { IBookListItem } from "../../Domain/Book";
 
 describe("GetBooksForSearch", () => {
   it("returns books for search", async () => {

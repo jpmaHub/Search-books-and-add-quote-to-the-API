@@ -1,85 +1,64 @@
 import React, { Component } from "react";
 import ViewBook from '../ViewBook';
 import SearchForm from '../SearchForm';
+import { Input, Button } from "antd";
+import './index.css';
+import { IBookListItem } from "../../UseCases/GetBooksSearch";
+
+export interface ISearchBooksData {
+  execute: (searchQuery: string) => Promise<IBookListItem[]>;
+}
 
 interface IProps {
   bookType?: JSX.Element;
   listSearchedBooks?: boolean;
   type?: string;
+  searchBooksData: ISearchBooksData;
 }
 
 interface IState {
-  Books: JSX.Element[];
-  deleted: boolean;
+  booksData: IBookListItem[];
+  query: string;
 }
 
 export default class AddBook extends Component<IProps, IState> {
+  private textInput: React.RefObject<Input>;
+
   constructor(props: IProps) {
     super(props);
-    let typeBooks = this.props.bookType
-    let books;
-    if (this.props.listSearchedBooks === true && typeBooks != undefined) {
-      books = [typeBooks]
-    }
-    this.state = { Books: books || [], deleted: false }
-  }
 
-  private addbook(event: any) {
-    let currentBooks = this.state.Books;
-    let textBox = event.target.previousElementSibling;
+    this.textInput = React.createRef();
 
-    if (textBox.value) {
-      currentBooks.push(textBox.value);
-      textBox.value = '';
-
-      this.setState({
-        Books: currentBooks
-      });
+    this.state = {
+      booksData: [],
+      query: '',
     }
   }
 
-  private removebook(event: any) {
-    let currentbook = event.target.textContent;
-    let updatedBooks = this.state.Books.filter((book: JSX.Element) => {
-      return currentbook !== book;
-    });
-
+  private async addbook(event: any) {
+    let textBox = await this.textInput.current!.state.value
     this.setState({
-      Books: updatedBooks
+      query: textBox
     });
 
-    !this.state.deleted && this.setState({
-      deleted: true
-    });
+    let result = await this.props.searchBooksData.execute(this.state.query)
+
+    this.setState({ booksData: result })
   }
-
-  render() {
-    let cssbookItem = 'book-item';
-
-    let bookItems = this.state.Books.map((book: JSX.Element, i: number) => {
-      return <div onClick={this.removebook.bind(this)}
-        className={cssbookItem}
-        key={cssbookItem + i}>{book}
-      </div>;
-    });
-
-    let placeText = this.props.type == undefined ? "Search Books by Title" : "Search Books by " + this.props.type;
-
+  
+  public render() {
     return (
       <div data-test="bookList"
         className="Books-list">
+
         <SearchForm>
-          <input data-test="inputText" type="text" id="input-add" style={{ height: "20px", width: "150px" }} placeholder={placeText} />
-          <button data-test="btn" type="primary" id="new-book"
-            onClick={this.addbook.bind(this)} style={{ height: "27px" }}>Add book</button>
+          <Input ref={this.textInput} data-test="inputText" type="text" className="input-add" />
+          <Button data-test="btn-click" type="primary" id="new-book" onClick={this.addbook.bind(this)} style={{ height: "27px" }}>Search</Button>
         </SearchForm>
 
-        <ViewBook>
-          <div style={{ fontSize: "20px", textAlign: "center" }}>
-            {bookItems}
-          </div>
-        </ViewBook>
+        <ViewBook data-test="view-books" booksData={this.state.booksData} />
       </div>
     );
   }
 }
+
