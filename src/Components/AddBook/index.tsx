@@ -42,7 +42,6 @@ export default class AddBook extends Component<IProps, IState> {
     });
 
     let result = await this.props.searchBooksData.execute(this.state.query)
-
     this.setState({ booksData: result })
   }
   

@@ -20,35 +20,41 @@ export default class ViewBook extends Component <IBooksProps> {
       columns={GetColumns()}
       dataSource={this.props.booksData}
       rowKey={this.rowKey}
+      
     />
     );
   }
- 
 }
 
 function GetColumns(): ColumnProps<IBookListItem>[] {
   return [
     {
-      dataIndex: "volumnInfo.title",
-      key: "volumnInfo.title",
+      dataIndex: "volumeInfo.title",
+      key: "volumeInfo.title",
       title: "Title",
       width: "auto",
     },
     {
-      dataIndex: "volumnInfo.authors",
-      key: "volumnInfo.authors",
+      dataIndex: "volumeInfo.authors",
+      key: "volumeInfo.authors",
       title: "Author",
       width: "auto",
     },
     {
-      dataIndex: "volumnInfo.publisher",
-      key: "volumnInfo.publisher",
+      dataIndex: "volumeInfo.publisher",
+      key: "volumeInfo.publisher",
       title: "Publisher",
       width: "auto",
     },
     {
-      dataIndex: "volumnInfo.averageRating",
-      key: "volumnInfo.averageRating",
+      dataIndex: "volumeInfo.publishedDate",
+      key: "year",
+      title: "Published Date",
+      width: "auto",   
+    },
+    {
+      dataIndex: "volumeInfo.averageRating",
+      key: "volumeInfo.averageRating",
       title: "Average Rating",
       width: "auto",
     },
