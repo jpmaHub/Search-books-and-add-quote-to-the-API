@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import ViewBook from '../ViewBook';
 import SearchForm from '../SearchForm';
-import { Input, Button } from "antd";
-import './index.css';
 import { IBookListItem } from "../../UseCases/GetBooksSearch";
+import { Input, Button } from 'antd';
+import './index.css';
 
 export interface ISearchBooksData {
   execute: (searchQuery: string) => Promise<IBookListItem[]>;
@@ -18,7 +18,6 @@ interface IProps {
 
 interface IState {
   booksData: IBookListItem[];
-  query: string;
 }
 
 export default class AddBook extends Component<IProps, IState> {
@@ -31,20 +30,16 @@ export default class AddBook extends Component<IProps, IState> {
 
     this.state = {
       booksData: [],
-      query: '',
     }
   }
 
   private async addbook(event: any) {
-    let textBox = await this.textInput.current!.state.value
-    this.setState({
-      query: textBox
-    });
+    let query = this.textInput.current!.state.value
 
-    let result = await this.props.searchBooksData.execute(this.state.query)
+    let result = await this.props.searchBooksData.execute(query)
     this.setState({ booksData: result })
   }
-  
+
   public render() {
     return (
       <div data-test="bookList"

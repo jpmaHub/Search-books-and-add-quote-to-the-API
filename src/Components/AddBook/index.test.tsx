@@ -7,12 +7,8 @@ import { IBookListItem } from '../../UseCases/GetBooksSearch';
 
 describe('SearchBook', () => {
   it('calls execute on getSearchBooks', async () => {
-    const searchQuery = encodeURI(faker.lorem.word());
-
-    const booksData: IBookListItem[] = generateMockSearchBooks(10);
-
     const getBooksSearch = {
-      execute: jest.fn((searchQuery: string) => Promise.resolve(booksData)),
+      execute: jest.fn(),
     };
 
     const addBook = mount((
@@ -22,17 +18,15 @@ describe('SearchBook', () => {
     const buttonClick = addBook.find({ "data-test": "btn-click" })
     buttonClick.first().simulate("click");
 
-    expect(await getBooksSearch.execute).toHaveBeenCalled();
-   
+    expect(getBooksSearch.execute).toHaveBeenCalled();
+
   });
 
   it('renders the book list', async () => {
-    const searchQuery = encodeURI(faker.lorem.word());
-
     const booksData: IBookListItem[] = generateMockSearchBooks(10);
 
     const getBooksSearch = {
-      execute: jest.fn((searchQuery: string) => Promise.resolve(booksData)),
+      execute: jest.fn((_searchQuery: string) => Promise.resolve(booksData)),
     };
 
     const addBook = mount((
@@ -42,7 +36,7 @@ describe('SearchBook', () => {
     const buttonClick = addBook.find({ "data-test": "btn-click" })
     buttonClick.first().simulate("click");
 
-    addBook.setState({ booksData: booksData, query: searchQuery });
+    addBook.setState({ booksData: booksData });
     expect(addBook.find({ "data-test": "view-books" }).props().booksData).toEqual(booksData);
   });
 
@@ -66,7 +60,7 @@ describe('SearchBook', () => {
     buttonClick.first().simulate("click");
 
     expect(getInput.state().value).toEqual(searchQuery);
-    expect(await getBooksSearch.execute).toHaveBeenCalledWith(searchQuery);
+    expect(getBooksSearch.execute).toHaveBeenCalledWith(searchQuery);
   });
 
   it('does not calls execute on getSearchBooks', async () => {
@@ -76,7 +70,6 @@ describe('SearchBook', () => {
       execute: jest.fn(() => booksData),
     };
 
-    expect(await getBooksSearch.execute).not.toHaveBeenCalled();
+    expect(getBooksSearch.execute).not.toHaveBeenCalled();
   });
-
 })
