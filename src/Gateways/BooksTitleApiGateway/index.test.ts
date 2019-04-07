@@ -12,7 +12,7 @@ it("gets books for the given search", async () => {
     items: books,
   };
 
-  nock("https://www.googleapis.com")
+   nock("https://www.googleapis.com")
     .get(`/books/v1/volumes?q=${searchQuery}&key=${process.env.REACT_APP_API_KEY}&maxResults=5`)
     .reply(200, booksSearchApiResponse, {
       "Access-Control-Allow-Origin": "*",
