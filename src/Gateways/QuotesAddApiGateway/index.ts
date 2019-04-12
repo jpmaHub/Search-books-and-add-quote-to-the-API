@@ -7,7 +7,7 @@ async function createSession() {
     loginHeaders
   );
 
-  return response.data["User-Token"]
+  return Object.values(response.data)[0]
 }
 
 export default class QuotesAddApiGateway {

@@ -31,7 +31,7 @@ export default class AddQuote extends Component<IProps> {
 
   public render() {
     return (
-      <Form onSubmit={this.submit.bind(this)}>
+      <Form data-test="add-quote-form" onSubmit={this.submit.bind(this)}>
         <Form.Item>
           Author
           <Input ref={this.textInputAuthor} data-test="inputTextAuthor" type="text" className={styles.inputLabel} />

@@ -38,7 +38,7 @@ describe('AddQuote', () => {
       <AddQuote add={addAQuote} />
     ));
 
-    const buttonClick = addQuote.find({ "data-test": "add-quote-button" })
+    const buttonClick = addQuote.find('button[data-test="add-quote-button"]')
 
     const getInputAuthor = addQuote.find({ "data-test": "inputTextAuthor" }).first().simulate('change', { target: { value: author } });
     const getInputQuote = addQuote.find({ "data-test": "inputTextQuote" }).first().simulate('change', { target: { value: quote } });
@@ -62,12 +62,12 @@ describe('AddQuote', () => {
       <AddQuote add={addAQuote} />
     ));
 
-    const buttonClick = addQuote.find({ "data-test": "add-quote-button" })
+    const formClick = addQuote.find('form[data-test="add-quote-form"]')
 
-    addQuote.find({ "data-test": "inputTextAuthor" }).first().simulate('change', { target: { value: author } });
-    addQuote.find({ "data-test": "inputTextQuote" }).first().simulate('change', { target: { value: quote } });
+    addQuote.find('input[data-test="inputTextAuthor"]').first().simulate('change', { target: { value: author } });
+    addQuote.find('input[data-test="inputTextQuote"]').first().simulate('change', { target: { value: quote } });
 
-    buttonClick.first().simulate('submit')
+    formClick.first().simulate('submit')
 
     expect(addAQuote.execute.mock.calls.length).toBe(1);
     expect(addAQuote.execute.mock.calls[0][0]).toBe(author);
